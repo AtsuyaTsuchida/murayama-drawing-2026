@@ -10,20 +10,12 @@ of a drawing growing stroke by stroke.
 - `scripts/` — dataset construction, training launchers, generation, evaluation
 - `src_modified/` — modified files from img2img-turbo (stochastic mode wired into training)
 
-## Experiments
-
-| # | Implementation | Base model | Description |
-| --- | --- | --- | --- |
-| 1 | img2img-turbo | stabilityai/sd-turbo | Full-state prediction. Desaturation and blur |
-| 2 | img2img-turbo | stabilityai/sd-turbo | Diff prediction, deterministic. Blank became the loss optimum |
-| 3 | img2img-turbo | stabilityai/sd-turbo | Diff prediction, stochastic. Same outcome |
-| 4 | diffusers | timbrooks/instruct-pix2pix | N to N+1. Style successfully acquired |
-
-Experiment 4 is the model used for autoregressive generation.
-
 ## Autoregressive generation
 
 `scripts/autoregressive_k1_accum.py`
+
+Built on a fine-tuned InstructPix2Pix model (`timbrooks/instruct-pix2pix`) trained on
+N to N+1 pairs.
 
 Naively feeding the output back as input breaks down within a few iterations because
 VAE reconstruction error accumulates. The accumulative composition method solves this:
